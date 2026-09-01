@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: birth-lottery
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    maxShutdownDelaySeconds: 30
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: COUNTRY_DATA_MODE
+        value: live
+      - key: RC_API_KEY
+        sync: false

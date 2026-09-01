@@ -1,0 +1,12 @@
+.env
+.git
+.github
+.venv
+__pycache__
+*.py[cod]
+*.log
+frontend/.env
+frontend/dist
+frontend/node_modules
+frontend/src/assets/react.svg
+frontend/src/assets/vite.svg

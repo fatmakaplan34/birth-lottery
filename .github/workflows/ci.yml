@@ -1,0 +1,59 @@
+name: Birth Lottery checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install backend dependencies
+        run: pip install --requirement requirements.txt
+
+      - name: Verify backend and bundled country data
+        env:
+          COUNTRY_DATA_MODE: snapshot
+        run: |
+          python -m compileall -q app
+          python - <<'PY'
+          import asyncio
+          from app.main import health
+          from app.services.restcountries import get_all_countries
+
+          async def verify():
+              countries = await get_all_countries()
+              assert len(countries) == 252
+              assert health()["status"] == "alive"
+
+          asyncio.run(verify())
+          PY
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Lint frontend
+        working-directory: frontend
+        run: npm run lint
