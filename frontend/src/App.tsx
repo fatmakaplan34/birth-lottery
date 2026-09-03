@@ -248,7 +248,7 @@ function App() {
   }, [theme]);
   useEffect(() => {
     document.documentElement.lang = locale;
-    document.title = locale === "tr" ? "Birth Lottery — İnsan Olasılık Atlası" : "Birth Lottery — Human Probability Atlas";
+    document.title = "Birth Lottery";
     localStorage.setItem("birth-lottery-locale", locale);
   }, [locale]);
   async function loadCountries() {
