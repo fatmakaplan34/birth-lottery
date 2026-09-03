@@ -16,6 +16,69 @@ SNAPSHOT_PATH = (
 )
 
 
+# The upstream ``languages`` field mixes official languages with regional or
+# commonly spoken languages for some countries. Keep the legally relevant
+# country-level values used by the language-odds feature explicit here.
+OFFICIAL_LANGUAGE_OVERRIDES = {
+    "AUT": ["German"],
+    "CHE": ["German", "French", "Italian", "Romansh"],
+    "LUX": ["Luxembourgish", "French", "German"],
+    "MDV": ["Dhivehi"],
+    "NAM": ["English"],
+    "NER": ["Hausa"],
+}
+
+
+def apply_country_corrections(country: dict) -> dict:
+    corrected = dict(country)
+    official_languages = OFFICIAL_LANGUAGE_OVERRIDES.get(
+        corrected.get("iso3")
+    )
+    if official_languages is not None:
+        corrected["languages"] = official_languages.copy()
+    return corrected
+
+
+def merge_country_data(
+    snapshot_countries: list[dict],
+    live_countries: list[dict],
+) -> list[dict]:
+    """Enrich the complete snapshot without letting a partial feed delete rows."""
+
+    live_by_iso3 = {
+        country.get("iso3"): country
+        for country in live_countries
+        if country.get("iso3")
+    }
+    snapshot_ids = {
+        country.get("iso3")
+        for country in snapshot_countries
+        if country.get("iso3")
+    }
+    merged = []
+
+    for snapshot_country in snapshot_countries:
+        combined = dict(snapshot_country)
+        live_country = live_by_iso3.get(snapshot_country.get("iso3"))
+        if live_country:
+            combined.update({
+                key: value
+                for key, value in live_country.items()
+                if value not in (None, "", [], {})
+            })
+        merged.append(apply_country_corrections(combined))
+
+    for live_country in live_countries:
+        if live_country.get("iso3") not in snapshot_ids:
+            merged.append(apply_country_corrections(live_country))
+
+    merged.sort(
+        key=lambda country: country.get("population", 0),
+        reverse=True,
+    )
+    return merged
+
+
 def load_country_snapshot() -> list[dict]:
     with SNAPSHOT_PATH.open(encoding="utf-8") as snapshot_file:
         countries = json.load(snapshot_file)
@@ -23,7 +86,7 @@ def load_country_snapshot() -> list[dict]:
     if not isinstance(countries, list) or not countries:
         raise RuntimeError("Bundled country snapshot is invalid")
 
-    return countries
+    return [apply_country_corrections(country) for country in countries]
 
 
 async def fetch_live_countries() -> list[dict]:
@@ -56,7 +119,7 @@ async def fetch_live_countries() -> list[dict]:
             offset += 100
 
     countries = [
-        normalize_country(country)
+        apply_country_corrections(normalize_country(country))
         for country in all_objects
         if country.get("population", 0) > 0
     ]
@@ -90,7 +153,8 @@ async def get_all_countries() -> list[dict]:
         and Settings.RC_API_KEY
     ):
         try:
-            countries = await fetch_live_countries()
+            live_countries = await fetch_live_countries()
+            countries = merge_country_data(countries, live_countries)
         except (httpx.HTTPError, ValueError, RuntimeError):
             pass
 

@@ -30,11 +30,30 @@ jobs:
           python - <<'PY'
           import asyncio
           from app.main import health
-          from app.services.restcountries import get_all_countries
+          from app.services.language_catalog import resolve_language_countries
+          from app.services.restcountries import get_all_countries, merge_country_data
 
           async def verify():
               countries = await get_all_countries()
               assert len(countries) == 252
+              assert any(country["iso3"] == "MDV" for country in countries)
+
+              merged = merge_country_data(countries, [countries[0]])
+              assert len(merged) == 252
+              assert any(country["iso3"] == "MDV" for country in merged)
+
+              _, german = resolve_language_countries(countries, "Almanca")
+              german_ids = {country["iso3"] for country in german}
+              assert german_ids == {"AUT", "BEL", "CHE", "DEU", "LIE", "LUX"}
+
+              _, french = resolve_language_countries(countries, "Fransızca")
+              assert "NER" not in {country["iso3"] for country in french}
+
+              _, hausa = resolve_language_countries(countries, "Hausa")
+              assert "NER" in {country["iso3"] for country in hausa}
+
+              _, dhivehi = resolve_language_countries(countries, "Divehice")
+              assert {country["iso3"] for country in dhivehi} == {"MDV"}
               assert health()["status"] == "alive"
 
           asyncio.run(verify())
