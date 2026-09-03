@@ -295,7 +295,7 @@ function App() {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <button className="brand" type="button" onClick={() => setView("birth")}><span className="brand-mark">BL</span><span>Birth Lottery<small>{t(locale, "brandSubtitle")}</small></span></button>
+        <button className="brand" type="button" onClick={() => setView("birth")}><span className="brand-mark">BL</span><span>Birth Lottery</span></button>
         <div className="display-controls">
           <div className="locale-toggle" aria-label={t(locale, "languageToggle")}><button type="button" className={locale === "tr" ? "active" : ""} onClick={() => setLocale("tr")}>TR</button><button type="button" className={locale === "en" ? "active" : ""} onClick={() => setLocale("en")}>EN</button></div>
           <button type="button" className="theme-toggle" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label={t(locale, "theme")}><span>{theme === "dark" ? "☼" : "◐"}</span>{t(locale, theme === "dark" ? "light" : "dark")}</button>
