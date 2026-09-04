@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="language-line" x1="9" y1="7" x2="39" y2="41" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17366F"/>
+      <stop offset="1" stop-color="#19A9AE"/>
+    </linearGradient>
+    <clipPath id="bubble-clip"><path d="M8 22C8 13.7 15.2 7 24 7s16 6.7 16 15-7.2 15-16 15c-2.4 0-4.7-.5-6.7-1.4L10 41l1.8-8.1A14.5 14.5 0 0 1 8 22Z"/></clipPath>
+  </defs>
+  <path d="M8 22C8 13.7 15.2 7 24 7s16 6.7 16 15-7.2 15-16 15c-2.4 0-4.7-.5-6.7-1.4L10 41l1.8-8.1A14.5 14.5 0 0 1 8 22Z" stroke="url(#language-line)" stroke-width="2.6" stroke-linejoin="round"/>
+  <g clip-path="url(#bubble-clip)" stroke="url(#language-line)" stroke-width="2" stroke-linecap="round">
+    <path d="M9 22h30M12 15.5h24M12 28.5h24"/>
+    <path d="M24 8c4.1 3.5 6.5 8.3 6.5 14S28.1 32.5 24 36M24 8c-4.1 3.5-6.5 8.3-6.5 14S19.9 32.5 24 36"/>
+  </g>
+  <circle cx="39.5" cy="9" r="2.2" fill="#E7A338"/>
+</svg>
