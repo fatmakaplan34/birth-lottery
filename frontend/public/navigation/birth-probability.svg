@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="birth-line" x1="10" y1="8" x2="39" y2="41" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17366F"/>
+      <stop offset="1" stop-color="#19A9AE"/>
+    </linearGradient>
+  </defs>
+  <path d="M24 43s12-10.2 12-22A12 12 0 0 0 12 21c0 11.8 12 22 12 22Z" stroke="url(#birth-line)" stroke-width="2.6" stroke-linejoin="round"/>
+  <circle cx="24" cy="21" r="3.2" stroke="#E7A338" stroke-width="2.4"/>
+  <path d="M17.5 21a6.5 6.5 0 0 1 13 0M14 21a10 10 0 0 1 20 0" stroke="url(#birth-line)" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="m39.5 7 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z" fill="#E7A338"/>
+</svg>
