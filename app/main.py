@@ -52,10 +52,13 @@ async def security_headers(request: Request, call_next):
     )
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
-        "script-src 'self'; "
-        "style-src 'self' 'unsafe-inline'; "
-        "img-src 'self' data: https://flags.restcountries.com; "
-        "connect-src 'self'; "
+        "script-src 'self' https://www.googletagmanager.com; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "img-src 'self' data: https://flags.restcountries.com "
+        "https://www.google-analytics.com https://*.google-analytics.com; "
+        "connect-src 'self' https://www.google-analytics.com "
+        "https://*.google-analytics.com https://www.googletagmanager.com; "
         "object-src 'none'; "
         "base-uri 'self'; "
         "frame-ancestors 'none'"
