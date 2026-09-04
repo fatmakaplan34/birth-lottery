@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="pedestals" x1="5" y1="42" x2="43" y2="13" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#19A9AE"/>
+      <stop offset="1" stop-color="#476DB6"/>
+    </linearGradient>
+  </defs>
+  <path d="M5.5 42V30.5a2.5 2.5 0 0 1 2.5-2.5h8a2.5 2.5 0 0 1 2.5 2.5V42h-13Z" fill="#19A9AE" fill-opacity=".07" stroke="url(#pedestals)" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M29 42V17.5a2.5 2.5 0 0 1 2.5-2.5H40a2.5 2.5 0 0 1 2.5 2.5V42H29Z" fill="#476DB6" fill-opacity=".07" stroke="url(#pedestals)" stroke-width="2.5" stroke-linejoin="round"/>
+  <text x="7.2" y="25.5" fill="#E25B56" font-family="Arial, sans-serif" font-size="15" font-weight="700">$</text>
+  <text x="27.2" y="12.5" fill="#35B98A" font-family="Arial, sans-serif" font-size="9.5" font-weight="700">$</text>
+  <text x="34.1" y="9" fill="#35B98A" font-family="Arial, sans-serif" font-size="9.5" font-weight="700">$</text>
+  <text x="40" y="13.5" fill="#35B98A" font-family="Arial, sans-serif" font-size="9.5" font-weight="700">$</text>
+  <path d="m24 22 1.35 3.65L29 27l-3.65 1.35L24 32l-1.35-3.65L19 27l3.65-1.35L24 22Z" fill="#E7A338"/>
+  <path d="M3.5 42h41" stroke="url(#pedestals)" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
