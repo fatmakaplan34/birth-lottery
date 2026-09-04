@@ -8,6 +8,8 @@ import type {
   LanguageOddsResponse, LivingStandardsResponse,
 } from "./api";
 import { CountryInfoCard } from "./CountryInfoCard";
+import { CookieConsent } from "./CookieConsent";
+import { reopenCookieConsent, trackEvent } from "./analytics";
 import {
   formatLocalizedNumber, languageLabel, localizedCountryName,
   t,
@@ -104,7 +106,10 @@ function LanguagePanel({ countries, locale }: { countries: Country[]; locale: Lo
 
   async function analyze() {
     setLoading(true); setError(null);
-    try { setResult(await getLanguageOdds(language, year)); }
+    try {
+      setResult(await getLanguageOdds(language, year));
+      trackEvent("language_distribution");
+    }
     catch (requestError) {
       setError(visibleError(requestError, t(locale, "calculationError")));
     }
@@ -163,7 +168,10 @@ function ComparePanel({ countries, locale }: { countries: Country[]; locale: Loc
   const [error, setError] = useState<string | null>(null);
   async function compare() {
     setLoading(true); setError(null);
-    try { setResult(await getLivingStandards(country1, country2, year)); }
+    try {
+      setResult(await getLivingStandards(country1, country2, year));
+      trackEvent("living_standards_comparison");
+    }
     catch (requestError) {
       setError(visibleError(requestError, t(locale, "comparisonError")));
     }
@@ -213,6 +221,7 @@ function RandomPanel({ locale }: { locale: Locale }) {
       const lottery = await drawLottery();
       setProbability(lottery.birth_probability.percentage);
       setProfile(await getCountryProfile(lottery.result.iso3));
+      trackEvent("random_birth_draw");
     } catch (requestError) {
       setError(visibleError(requestError, t(locale, "calculationError")));
     }
@@ -285,7 +294,10 @@ function App() {
   async function analyzeBirth() {
     if (!selected || !birthDate) return;
     setLoading(true); setError(null);
-    try { setResult(await getBirthOdds({ country: selected.iso3, birthDate, city })); }
+    try {
+      setResult(await getBirthOdds({ country: selected.iso3, birthDate, city }));
+      trackEvent("birth_probability_calculation");
+    }
     catch (requestError) {
       setError(visibleError(requestError, t(locale, "calculationError")));
     }
@@ -317,7 +329,10 @@ function App() {
             key={item.id}
             type="button"
             aria-current={view === item.id ? "page" : undefined}
-            onClick={() => setView(item.id)}
+            onClick={() => {
+              setView(item.id);
+              trackEvent(`section_${item.id}`);
+            }}
           >
             <img className="section-nav-icon" src={item.icon} alt="" aria-hidden="true" />
             <span className="section-nav-label">{t(locale, item.key)}</span>
@@ -360,7 +375,15 @@ function App() {
       {view === "language" && <main className="secondary-workspace"><LanguagePanel key={locale} countries={countries} locale={locale} /></main>}
       {view === "compare" && <main className="secondary-workspace"><ComparePanel countries={countries} locale={locale} /></main>}
       {view === "random" && <main className="secondary-workspace"><RandomPanel locale={locale} /></main>}
-      <footer><span>{t(locale, "footerSource")}</span><span>{t(locale, "footerNote")}</span></footer>
+      <footer>
+        <span>{t(locale, "footerSource")}</span>
+        <span className="footer-links">
+          <a href="/privacy.html">{t(locale, "privacy")}</a>
+          <button type="button" onClick={reopenCookieConsent}>{t(locale, "cookieSettings")}</button>
+          <span>{t(locale, "footerNote")}</span>
+        </span>
+      </footer>
+      <CookieConsent locale={locale} />
     </div>
   );
 }
