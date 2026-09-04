@@ -1,5 +1,8 @@
 # Birth Lottery
 
+Here's the link if you want to see your birth lottery!
+https://birth-lottery.onrender.com/
+
 <p align="center">
   <strong>Explore how birthplace, year, language communities, and living standards shape the lottery of birth.</strong>
 </p>
