@@ -22,11 +22,11 @@ const GlobePicker = lazy(() =>
 type View = "birth" | "language" | "compare" | "random";
 type Theme = "dark" | "light";
 const currentYear = new Date().getFullYear();
-const viewKeys: Array<{ id: View; key: MessageKey; number: string }> = [
-  { id: "birth", key: "navBirth", number: "01" },
-  { id: "language", key: "navLanguage", number: "02" },
-  { id: "compare", key: "navCompare", number: "03" },
-  { id: "random", key: "navRandom", number: "04" },
+const viewKeys: Array<{ id: View; key: MessageKey; icon: string }> = [
+  { id: "birth", key: "navBirth", icon: "/navigation/birth-probability.svg" },
+  { id: "language", key: "navLanguage", icon: "/navigation/language-lens.svg" },
+  { id: "compare", key: "navCompare", icon: "/navigation/living-standards.svg" },
+  { id: "random", key: "navRandom", icon: "/navigation/random-draw.svg" },
 ];
 
 function visibleError(error: unknown, fallback: string) {
@@ -311,7 +311,18 @@ function App() {
         </div>
       </header>
       <nav className="section-nav" aria-label={t(locale, "navLabel")}>
-        {viewKeys.map((item) => <button className={view === item.id ? "active" : ""} key={item.id} type="button" onClick={() => setView(item.id)}><span>{item.number}</span>{t(locale, item.key)}</button>)}
+        {viewKeys.map((item) => (
+          <button
+            className={view === item.id ? "active" : ""}
+            key={item.id}
+            type="button"
+            aria-current={view === item.id ? "page" : undefined}
+            onClick={() => setView(item.id)}
+          >
+            <img className="section-nav-icon" src={item.icon} alt="" aria-hidden="true" />
+            <span className="section-nav-label">{t(locale, item.key)}</span>
+          </button>
+        ))}
       </nav>
 
       {view === "birth" && (
