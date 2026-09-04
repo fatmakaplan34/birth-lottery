@@ -11,8 +11,11 @@
   justify-content: space-between; border-bottom: 1px solid var(--line); }
 .brand { display: flex; gap: 12px; align-items: center; border: 0; background: none; padding: 0; text-align: left; cursor: pointer; }
 .brand-mark { width: 52px; height: 52px; object-fit: contain; flex: 0 0 auto; }
+.brand-copy { display: grid; gap: 7px; }
 .brand-name { color: var(--paper); font-family: "DM Sans", sans-serif; font-size: 22px; font-weight: 300; line-height: 1; letter-spacing: -.035em; }
 .brand-name strong { font-weight: 700; }
+.brand-slogan { color: var(--muted); font: 600 9px/1 "DM Sans", sans-serif; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.brand-slogan em { color: var(--mint); font-style: normal; }
 .live-status { color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; display: flex; align-items: center; gap: 9px; }
 .live-status i { width: 6px; height: 6px; background: var(--mint); border-radius: 50%; box-shadow: 0 0 12px var(--mint); }
 .display-controls { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
@@ -165,7 +168,7 @@ footer { min-height: 58px; padding: 0 clamp(20px, 4vw, 64px); border-top: 1px so
   .compare-form { grid-template-columns: 1fr 1fr; }.compare-form .versus { display: none; }.compare-form .primary-button { grid-column: 1 / -1; }.field-small { max-width: none; }
 }
 @media (max-width: 640px) {
-  .topbar { min-height: 76px; }.brand-mark { width: 43px; height: 43px; }.brand-name { font-size: 19px; }.live-status { display: none; }.display-controls { gap: 6px; }.theme-toggle { width: 36px; padding: 0; justify-content: center; font-size: 0; }.theme-toggle span { font-size: 15px; }.section-nav { padding-inline: 16px; }.section-nav button { padding-inline: 17px; }
+  .topbar { min-height: 76px; }.brand { gap: 9px; }.brand-mark { width: 43px; height: 43px; }.brand-copy { gap: 5px; }.brand-name { font-size: 19px; }.brand-slogan { font-size: 7px; letter-spacing: .1em; }.live-status { display: none; }.display-controls { gap: 6px; }.theme-toggle { width: 36px; padding: 0; justify-content: center; font-size: 0; }.theme-toggle span { font-size: 15px; }.section-nav { padding-inline: 16px; }.section-nav button { padding-inline: 17px; }
   h1 { font-size: 52px; }.globe-column { padding-top: 34px; }.globe-shell { margin-top: 12px; }.globe-hint { right: 8px; bottom: 15px; }
   .birth-form { grid-template-columns: 1fr; }.birth-form .field:last-child { grid-column: auto; }.stat-grid { grid-template-columns: 1fr 1fr; }.stat-grid div:nth-child(2) { border-right: 0; }.stat-grid div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .result-heading, .probability-display { align-items: flex-start; flex-direction: column; }.probability-display { gap: 12px; }

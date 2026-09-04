@@ -297,7 +297,10 @@ function App() {
       <header className="topbar">
         <button className="brand" type="button" onClick={() => setView("birth")} aria-label="Birth Lottery">
           <img className="brand-mark" src="/brand/birth-lottery-mark.png" alt="" />
-          <span className="brand-name"><strong>Birth</strong> Lottery</span>
+          <span className="brand-copy">
+            <span className="brand-name"><strong>Birth</strong> Lottery</span>
+            <small className="brand-slogan"><span>Born anywhere.</span> <em>Human everywhere.</em></small>
+          </span>
         </button>
         <div className="display-controls">
           <div className="locale-toggle" aria-label={t(locale, "languageToggle")}><button type="button" className={locale === "tr" ? "active" : ""} onClick={() => setLocale("tr")}>TR</button><button type="button" className={locale === "en" ? "active" : ""} onClick={() => setLocale("en")}>EN</button></div>
